@@ -5,7 +5,6 @@
     // use a single dummy dom ele as target for every qtip
     var $qtipContainer = $('<div></div>');
     var viewportDebounceRate = 250;
-    var nodeRadius = 23;
 
     function generateOpts( target, passedOpts ){
       var qtip = target.scratch().qtip;
@@ -90,7 +89,7 @@
           var pos = ele.renderedPosition() || ( e ? e.cyRenderedPosition : undefined );
           if( !pos || pos.x == null || isNaN(pos.x) ){ return; }
 
-          var offset = ele.isNode() ? nodeRadius : 0;
+          var offset = ele.isNode() ? window.reveal.nodeRadius : 0;
           qtipApi.set('position.adjust.x', cOff.left + pos.x + window.pageXOffset + offset / 2 * cy.zoom());
           qtipApi.set('position.adjust.y', cOff.top + pos.y + window.pageYOffset);
         };
@@ -148,7 +147,7 @@
         var pos = e.cyRenderedPosition;
         if( !pos || pos.x == null || isNaN(pos.x) ){ return; }
 
-        var offset = e.isNode() ? nodeRadius : 0;
+        var offset = ele.isNode() ? window.reveal.nodeRadius : 0;
         qtipApi.set('position.adjust.x', cOff.left + pos.x + window.pageXOffset + offset / 2 * cy.zoom());
         qtipApi.set('position.adjust.y', cOff.top + pos.y + window.pageYOffset);
       };
