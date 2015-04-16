@@ -83,8 +83,9 @@
         qtip.$domEle.qtip( opts );
         var qtipApi = qtip.api = qtip.$domEle.qtip('api'); // save api ref
         qtip.$domEle.removeData('qtip'); // remove qtip dom/api ref to be safe
+        qtipApi.set('position.effect', false);
 
-        var updatePosition = function(e){
+        var updatePosition = ele.updateQtipPosition = function(e){
           var cOff = container.getBoundingClientRect();
           var pos = ele.renderedPosition() || ( e ? e.cyRenderedPosition : undefined );
           if( !pos || pos.x == null || isNaN(pos.x) ){ return; }
