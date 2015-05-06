@@ -75,6 +75,9 @@
       }
 
       eles.each(function(i, ele){
+        if (ele.data('qtip-id')) {
+          return this;
+        }
         var scratch = ele.scratch();
         var qtip = scratch.qtip = scratch.qtip || {};
         var opts = generateOpts( ele, passedOpts );
