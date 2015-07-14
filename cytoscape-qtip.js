@@ -95,8 +95,23 @@
           if( !pos || pos.x == null || isNaN(pos.x) ){ return; }
 
           var offset = ele.isNode() ? ele._private.style['width'].value : 0;
-          qtipApi.set('position.adjust.x', cOff.left + pos.x + window.pageXOffset + offset / 2 * cy.zoom());
-          qtipApi.set('position.adjust.y', cOff.top + pos.y + window.pageYOffset);
+
+          // assign new location value
+          var newPositionX = cOff.left + pos.x + window.pageXOffset + offset / 2 * cy.zoom();
+          var newPositionY = cOff.top + pos.y + window.pageYOffset;
+          // check if new location is over lapping right windows
+          var overLappingRightCheck = function(x, offset) {
+              var screenWidth = $(window).width();
+              // the max pixel the right node can close to the right screen
+              var maxRightPos = 250;
+              // if it is less than the max width, we shift back 1.5 times of node width
+              return ((screenWidth - x) < maxRightPos) ? ( x - (1.5 * offset) * cy.zoom()) : x ;
+          };
+
+          newPositionX = overLappingRightCheck(newPositionX,offset);
+
+          qtipApi.set('position.adjust.x', newPositionX);
+          qtipApi.set('position.adjust.y', newPositionY);
         };
         updatePosition();
 
