@@ -83,7 +83,6 @@
         var opts = generateOpts( ele, passedOpts );
         ele.data('qtip-id', opts.id);
 
-
         qtip.$domEle.qtip( opts );
         var qtipApi = qtip.api = qtip.$domEle.qtip('api'); // save api ref
         qtip.$domEle.removeData('qtip'); // remove qtip dom/api ref to be safe
@@ -99,17 +98,17 @@
           // assign new location value
           var newPositionX = cOff.left + pos.x + window.pageXOffset + offset / 2 * cy.zoom();
           var newPositionY = cOff.top + pos.y + window.pageYOffset;
-          // check if new location is over lapping right windows
-          var overLappingRightCheck = function(x, offset) {
-              var screenWidth = $(window).width();
-              // the max pixel the right node can close to the right screen
-              var maxRightPos = 250;
-              // if it is less than the max width, we shift back 1.5 times of node width
-              return ((screenWidth - x) < maxRightPos) ? ( x - (1.5 * offset) * cy.zoom()) : x ;
-          };
+          var screenWidth = $(window).width();
 
-          newPositionX = overLappingRightCheck(newPositionX,offset);
+          // the max pixel the right node can close to the right screen
+          var maxRightPos = 250;
+          // if it is less than the max width
 
+          ele.data('left', false);
+          if((screenWidth - newPositionX) < maxRightPos) {
+              newPositionX -= (1.5 * offset) * cy.zoom();
+              ele.data('left', true);
+          }
           qtipApi.set('position.adjust.x', newPositionX);
           qtipApi.set('position.adjust.y', newPositionY);
         };
