@@ -97,16 +97,19 @@
 
           // assign new location value
           var newPositionX = cOff.left + pos.x + window.pageXOffset + offset / 2 * cy.zoom();
+          // with of the node with zoom factor
+          var nodeWidthOffset = offset * cy.zoom();
+          // the half width of tooltip
+          var toolTipWidthOffset = 40;
           var newPositionY = cOff.top + pos.y + window.pageYOffset;
+          // screen width
           var screenWidth = $(window).width();
-
           // the max pixel the right node can close to the right screen
           var maxRightPos = 250;
           // if it is less than the max width
-
           ele.data('left', false);
           if((screenWidth - newPositionX) < maxRightPos) {
-              newPositionX -= (1.5 * offset) * cy.zoom();
+              newPositionX -= nodeWidthOffset + toolTipWidthOffset;
               ele.data('left', true);
           }
           qtipApi.set('position.adjust.x', newPositionX);
