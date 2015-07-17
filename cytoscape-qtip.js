@@ -105,10 +105,10 @@
           // screen width
           var screenWidth = $(window).width();
           // the max pixel the right node can close to the right screen
-          var maxRightPos = 250;
+          var maxRightPos = 200;
           // if it is less than the max width
           ele.data('left', false);
-          if((screenWidth - newPositionX) < maxRightPos) {
+          if ((screenWidth - newPositionX) < maxRightPos) {
               newPositionX -= nodeWidthOffset + toolTipWidthOffset;
               ele.data('left', true);
           }
