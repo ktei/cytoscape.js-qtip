@@ -83,7 +83,6 @@
         var opts = generateOpts( ele, passedOpts );
         ele.data('qtip-id', opts.id);
 
-
         qtip.$domEle.qtip( opts );
         var qtipApi = qtip.api = qtip.$domEle.qtip('api'); // save api ref
         qtip.$domEle.removeData('qtip'); // remove qtip dom/api ref to be safe
@@ -95,8 +94,26 @@
           if( !pos || pos.x == null || isNaN(pos.x) ){ return; }
 
           var offset = ele.isNode() ? ele._private.style['width'].value : 0;
-          qtipApi.set('position.adjust.x', cOff.left + pos.x + window.pageXOffset + offset / 2 * cy.zoom());
-          qtipApi.set('position.adjust.y', cOff.top + pos.y + window.pageYOffset);
+
+          // assign new location value
+          var newPositionX = cOff.left + pos.x + window.pageXOffset + offset / 2 * cy.zoom();
+          // with of the node with zoom factor
+          var nodeWidthOffset = offset * cy.zoom();
+          // the half width of tooltip
+          var toolTipWidthOffset = 40;
+          var newPositionY = cOff.top + pos.y + window.pageYOffset;
+          // screen width
+          var screenWidth = $(window).width();
+          // the max pixel the right node can close to the right screen
+          var maxRightPos = 200;
+          // if it is less than the max width
+          ele.data('left', false);
+          if ((screenWidth - newPositionX) < maxRightPos) {
+              newPositionX -= nodeWidthOffset + toolTipWidthOffset;
+              ele.data('left', true);
+          }
+          qtipApi.set('position.adjust.x', newPositionX);
+          qtipApi.set('position.adjust.y', newPositionY);
         };
         updatePosition();
 
