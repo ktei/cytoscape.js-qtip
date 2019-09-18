@@ -16,7 +16,7 @@ gulp.task('default', ['publish'], function( next ){
 });
 
 gulp.task('publish', [], function( next ){
-  runSequence('confver', 'lint', 'pkgver', 'push', 'tag', 'npm', next);
+  runSequence('confver', /*'lint',*/ 'pkgver', 'push', 'tag', 'npm', next);
 });
 
 gulp.task('confver', ['version'], function(){
@@ -44,7 +44,7 @@ gulp.task('version', function( next ){
     console.log('Using version number `%s` for building', version);
     next();
   }
-  
+
 });
 
 gulp.task('pkgver', ['version'], function(){

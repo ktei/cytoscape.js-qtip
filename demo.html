@@ -11,16 +11,19 @@
 
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.js"></script>
-		<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
-		<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+		<!-- <script src="../cytoscape.js/build/cytoscape.js"></script> -->
 		<script src="cytoscape-qtip.js"></script>
 
 		<style>
-			body {
+			body, html {
 				font-family: helvetica;
 				font-size: 14px;
 				width: 100%;
 				height: 100%;
+				position: absolute;
+				padding: 0;
+				margin: 0;
 			}
 
 			#cy {
@@ -35,6 +38,7 @@
 			h1 {
 				opacity: 0.5;
 				font-size: 1em;
+				margin: 0.25em;
 			}
 		</style>
 
@@ -81,7 +85,7 @@
 							{ data: { source: 'k', target: 'g' } },
 							{ data: { source: 'g', target: 'j' } }
 						]
-					},
+					}
 				});
 
 				// just use the regular qtip api but on cy elements

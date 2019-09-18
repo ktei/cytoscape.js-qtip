@@ -1,5 +1,6 @@
 cytoscape-qtip
 ==============
+[![DOI](https://zenodo.org/badge/6343804.svg)](https://zenodo.org/badge/latestdoi/6343804)
 
 ![Preview](https://raw.githubusercontent.com/cytoscape/cytoscape.js-qtip/master/img/preview.png)
 
@@ -8,13 +9,19 @@ cytoscape-qtip
 
 A Cytoscape.js extension that wraps the [qTip jQuery library](http://qtip2.com)
 
+**It is recommended that, where possible, you use [`cytoscape-popper`](https://github.com/cytoscape/cytoscape.js-popper) with `tippy.js` instead of `cytoscape-qtip`.**
+
+- The [`qtip2`](https://github.com/qTip2/qTip2) library that this extension wraps is no longer maintained by its author.
+- `qtip2` does not have proper support for npm+webpack and npm+browserify, whereas `cytoscape-popper` does -- as do `popper.js` and `tippy.js`.
+- `cytoscape-popper` does not require `jquery`.
+- `qtip2` requires the use of `jquery@1` or `jquery@2`, which are both no longer maintained.
 
 
 ## Dependencies
 
- * jQuery >= 1.10.0, as qTip requires it
- * qTip >= 2.2.0
- * Cytoscape.js >=2.2.0
+ * jQuery ^2.0 || ^1.10.0, as qTip requires it
+ * qTip ^3.0 || ^2.2.0
+ * Cytoscape.js ^2.2.0 || ^3.0.0
 
 
 ## Usage instructions
@@ -29,10 +36,9 @@ Download the library:
 CommonJS:
 ```js
 var cytoscape = require('cytoscape');
-var jquery = require('jquery');
 var cyqtip = require('cytoscape-qtip');
 
-cyqtip( cytoscape, jquery ); // register extension
+cyqtip( cytoscape ); // register extension
 ```
 
 AMD:
@@ -42,7 +48,7 @@ require(['cytoscape', 'cytoscape-qtip', 'jquery'], function( cytoscape, cyqtip, 
 });
 ```
 
-Note that `jquery` must point to a jQuery object with `.qtip()` registered if any sort of `require()` is used.
+Note that `jquery` must point to a jQuery object with `.qtip()` registered if AMD is used.
 
 Plain HTML/JS has the extension registered for you automatically, because no `require()` is needed.
 
@@ -76,6 +82,11 @@ var api = cy.qtip('api');
 See the [qTip docs for details on the API](http://qtip2.com/api).  If you create more than one qTip on an element and use its API, you'll have to cache the `api` references after creating each qTip.
 
 
+## API restrictions
+
+You may not use `options.position.target`.  If you require a different value, like `'body'` or `'mouse'`, you don't need this extenstion -- you can simply use the qTip APIs directly on a DOM element.
+
+
 ## API additions
 
 These are additional options you can use for convenience.  Remember: This extension is just a wrapper to qTip.  If you require more complex behaviour, you should manually use the [qTip API](http://qtip2.com/api).
@@ -88,8 +99,8 @@ These are additional options you can use for convenience.  Remember: This extens
 
  * `options.hide.cyViewport` : When `true`, hides qTips when the viewport is manipulated (i.e. zoom/pan).
 
-
 ## Publishing instructions
 
 1. Set the version number env var: `export VERSION=1.2.3`
 1. Publish: `gulp`
+1. Make a release on GitHub to automatically register a new Zenodo DOI
